@@ -78,14 +78,16 @@ public class ModelController {
         this.mapUris = this.model.getNsPrefixMap();
     }
     
-    public void createDatatypeProperty(String uri){
+    public void createDatatypeProperty(String uri, String comment){
         DatatypeProperty p= this.model.createDatatypeProperty(gr+uri);
         p.addLabel(uri, null);
+        if(!comment.isEmpty()) p.addComment(comment, null);
         this.propiedades.addSubProperty(p);
     }
-    public void createObjectProperty(String uri){
+    public void createObjectProperty(String uri, String comment){
         ObjectProperty o =this.model.createObjectProperty(gr+uri);
         o.addLabel(uri, null);
+        if(!comment.isEmpty()) o.addComment(comment, null);
         this.propiedades.addSubProperty(o);
     }
     
