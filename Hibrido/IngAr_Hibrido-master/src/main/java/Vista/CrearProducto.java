@@ -11,13 +11,6 @@ import Controlador.MongoController;
 import Controlador.TDBController;
 
 
-/**
- *
- * @author Azul
- */
-
-
-
 public class CrearProducto extends javax.swing.JFrame {
     private MongoController mongocontroller;
     private FusekiController fusekicontroller;
@@ -47,57 +40,61 @@ public class CrearProducto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         titulo = new javax.swing.JLabel();
-        minimiza = new javax.swing.JButton();
-        cerrar = new javax.swing.JButton();
-        atras = new javax.swing.JButton();
-        id = new javax.swing.JLabel();
-        nombre = new javax.swing.JLabel();
-        marca = new javax.swing.JLabel();
-        descripcion = new javax.swing.JLabel();
-        modelo = new javax.swing.JLabel();
-        camponombre = new javax.swing.JTextField();
-        campoID = new javax.swing.JTextField();
-        campomarca = new javax.swing.JTextField();
-        campomodelo = new javax.swing.JTextField();
-        clase = new javax.swing.JLabel();
-        campoclase = new javax.swing.JTextField();
-        caract = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        campodescripcion = new javax.swing.JTextArea();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        campocaract = new javax.swing.JTextArea();
+        jSeparator3 = new javax.swing.JSeparator();
         guardar = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
+        cancelar = new javax.swing.JButton();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        lista = new javax.swing.JList<>();
+        propiedad = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        campopropiedad = new javax.swing.JTextArea();
+        atras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-        jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        jScrollPane2.setPreferredSize(new java.awt.Dimension(1500, 1500));
+        jPanel3.setBackground(new java.awt.Color(173, 199, 228));
 
-        jPanel1.setBackground(new java.awt.Color(173, 199, 228));
-        jPanel1.setMaximumSize(new java.awt.Dimension(1500, 1500));
-        jPanel1.setPreferredSize(new java.awt.Dimension(919, 779));
-
-        titulo.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 36)); // NOI18N
+        titulo.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 25)); // NOI18N
         titulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/add.png"))); // NOI18N
-        titulo.setText(" Crear Producto");
+        titulo.setText(" Agregar Producto");
 
-        minimiza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/diminish.png"))); // NOI18N
-        minimiza.setBorderPainted(false);
-        minimiza.setContentAreaFilled(false);
+        jSeparator3.setBackground(new java.awt.Color(121, 159, 200));
 
-        cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cancel.png"))); // NOI18N
-        cerrar.setBorderPainted(false);
-        cerrar.setContentAreaFilled(false);
-        cerrar.addActionListener(new java.awt.event.ActionListener() {
+        guardar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        guardar.setText("Guardar");
+        guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cerrarActionPerformed(evt);
+                guardarActionPerformed(evt);
             }
         });
+
+        cancelar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        cancelar.setText("Cancelar");
+        cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarActionPerformed(evt);
+            }
+        });
+
+        lista.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        lista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                listaevento(evt);
+            }
+        });
+        jScrollPane6.setViewportView(lista);
+
+        propiedad.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+
+        campopropiedad.setColumns(20);
+        campopropiedad.setRows(5);
+        jScrollPane7.setViewportView(campopropiedad);
 
         atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/left-arrow.png"))); // NOI18N
         atras.setBorderPainted(false);
@@ -108,175 +105,117 @@ public class CrearProducto extends javax.swing.JFrame {
             }
         });
 
-        id.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
-        id.setText("ID:");
-
-        nombre.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
-        nombre.setText("Nombre:");
-
-        marca.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
-        marca.setText("Marca:");
-
-        descripcion.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
-        descripcion.setText("Descripcion:");
-
-        modelo.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
-        modelo.setText("Modelo:");
-
-        clase.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
-        clase.setText("Clase:");
-
-        caract.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
-        caract.setText("Caracteristicas:");
-
-        campodescripcion.setColumns(20);
-        campodescripcion.setRows(5);
-        jScrollPane3.setViewportView(campodescripcion);
-
-        campocaract.setColumns(20);
-        campocaract.setRows(5);
-        jScrollPane4.setViewportView(campocaract);
-
-        guardar.setText("Guardar Cambios");
-
-        jSeparator1.setBackground(new java.awt.Color(144, 191, 242));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(atras)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(minimiza, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(caract)
-                            .addComponent(descripcion)
-                            .addComponent(clase)
-                            .addComponent(modelo)
-                            .addComponent(marca)
-                            .addComponent(nombre)
-                            .addComponent(id))
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator3)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(camponombre, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(campomarca, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(campoID, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(campomodelo, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
-                            .addComponent(jScrollPane4)
-                            .addComponent(campoclase)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addComponent(jSeparator1)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
+                        .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(propiedad, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(83, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(atras)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
                 .addComponent(titulo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cerrar)
-                    .addComponent(minimiza)
-                    .addComponent(atras, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
+                .addComponent(atras)
+                .addGap(11, 11, 11)
                 .addComponent(titulo)
-                .addGap(27, 27, 27)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(id)
-                    .addComponent(campoID, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombre)
-                    .addComponent(camponombre, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(marca)
-                    .addComponent(campomarca, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campomodelo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(modelo))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoclase, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clase))
-                .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(descripcion)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(caract))
-                .addGap(65, 65, 65)
-                .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(propiedad, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(63, 63, 63))
         );
-
-        jScrollPane2.setViewportView(jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1133, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarActionPerformed
+    private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
+        this.getCamposModificados();
+    }//GEN-LAST:event_guardarActionPerformed
+
+    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cerrarActionPerformed
+        int seleccion = JOptionPane.showOptionDialog(this, "No se guardaran los datos \n ¿Está seguro que desea cancelar?", "",  JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+            null,    // null para icono por defecto.
+            new Object[] { "Si", "No" },   // null para YES, NO y CANCEL
+            "Si");
+        if (seleccion==0){
+            Inicio i = new Inicio(mc, fc, tdb, modelcontroller);
+            this.setVisible(false);
+            i.setVisible(true);
+        }
+    }//GEN-LAST:event_cancelarActionPerformed
+
+    private void listaevento(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaevento
+
+    }//GEN-LAST:event_listaevento
 
     private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
         // TODO add your handling code here:
+        int seleccion = JOptionPane.showOptionDialog(this, "¿Está seguro que desea volver? \n No se guardaran los datos", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+            null,    // null para icono por defecto.
+            new Object[] { "Si", "No" },   // null para YES, NO y CANCEL
+            "Si");
+        if (seleccion==0){
+            ResultadosBusqueda rb = new ResultadosBusqueda(mc, fc, modelcontroller, tdb, datos.get("_id").toString(), datos.get("nombre").toString(), datos.get("marca").toString(), datos.get("modelo").toString(), datos.get("tipo").toString());
+            rb.setVisible(true);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_atrasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atras;
-    private javax.swing.JTextField campoID;
-    private javax.swing.JTextArea campocaract;
-    private javax.swing.JTextField campoclase;
-    private javax.swing.JTextArea campodescripcion;
-    private javax.swing.JTextField campomarca;
-    private javax.swing.JTextField campomodelo;
-    private javax.swing.JTextField camponombre;
-    private javax.swing.JLabel caract;
-    private javax.swing.JButton cerrar;
-    private javax.swing.JLabel clase;
-    private javax.swing.JLabel descripcion;
+    private javax.swing.JTextArea campopropiedad;
+    private javax.swing.JButton cancelar;
     private javax.swing.JButton guardar;
-    private javax.swing.JLabel id;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel marca;
-    private javax.swing.JButton minimiza;
-    private javax.swing.JLabel modelo;
-    private javax.swing.JLabel nombre;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JList<String> lista;
+    private javax.swing.JLabel propiedad;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }
