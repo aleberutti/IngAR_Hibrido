@@ -24,7 +24,6 @@ public class CrearProducto extends javax.swing.JFrame {
     private ModelController modelcontroller;
     private TDBController tdb;
     private Document datos;
-    private boolean activarComentarios;
     
     /**
      * Creates new form CrearProducto
