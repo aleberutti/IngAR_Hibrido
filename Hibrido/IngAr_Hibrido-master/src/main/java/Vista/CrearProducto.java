@@ -280,8 +280,6 @@ public class CrearProducto extends javax.swing.JFrame {
             if(datos.containsKey(lista.getSelectedValue().toLowerCase())){
                 //Si ya existia la propiedad la reemplazo 
                 datos.replace(lista.getSelectedValue().toLowerCase(), campopropiedad.getText());
-                System.out.println(lista.getSelectedValue().toLowerCase());
-                System.out.println(campopropiedad.getText());
             }
                           
             else{
@@ -297,8 +295,6 @@ public class CrearProducto extends javax.swing.JFrame {
                 }
                 else{
                     datos.append(lista.getSelectedValue().toLowerCase(), campopropiedad.getText()); 
-                    System.out.println(lista.getSelectedValue().toLowerCase());
-                    System.out.println(campopropiedad.getText());
                 }
                }
 
