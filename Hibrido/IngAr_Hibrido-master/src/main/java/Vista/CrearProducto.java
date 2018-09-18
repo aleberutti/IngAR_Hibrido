@@ -300,7 +300,6 @@ public class CrearProducto extends javax.swing.JFrame {
                     System.out.println(lista.getSelectedValue().toLowerCase());
                     System.out.println(campopropiedad.getText());
                 }
-                
                }
 
            }
