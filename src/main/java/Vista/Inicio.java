@@ -74,7 +74,7 @@ public class Inicio extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton1.setBackground(new java.awt.Color(204, 204, 204));
+        jButton1.setBackground(new java.awt.Color(204, 204, 255));
         jButton1.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 27)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/search.png"))); // NOI18N
         jButton1.setText(" Buscar Producto");
@@ -86,7 +86,7 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(204, 204, 204));
+        jButton2.setBackground(new java.awt.Color(204, 204, 255));
         jButton2.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 27)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plus.png"))); // NOI18N
         jButton2.setText(" Agregar Producto");
@@ -98,7 +98,7 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(204, 204, 204));
+        jButton3.setBackground(new java.awt.Color(204, 204, 255));
         jButton3.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 27)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/folder.png"))); // NOI18N
         jButton3.setText(" Consultar Ontologia");
