@@ -15,6 +15,7 @@ import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntProperty;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.util.iterator.ExtendedIterator;
 import org.apache.jena.util.iterator.Filter;
@@ -102,6 +103,10 @@ public class ModelController {
     
     public ExtendedIterator<? extends OntProperty> getProperties(){
         return this.propiedades.listSubProperties();
+    }
+    
+    public StmtIterator getPropertiesCrearProducto(){
+        return this.propiedades.listProperties();
     }
     
     public Clase createClass(String uri){

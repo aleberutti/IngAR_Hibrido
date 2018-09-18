@@ -26,72 +26,72 @@ import org.bson.Document;
  * @author ale_b
  */
 public class Main2 {
-    public static void main(String[] args) throws IOException {
-        TDBController data = new TDBController("C:\\Users\\ale_b\\Desktop\\ISI\\Investigación\\JenaTDB");
-        
-        data.loadModel("C:\\Users\\ale_b\\Desktop\\ISI\\Investigación\\gpc.owl");
-        
-        Dataset dataset = data.getDataset();
-       
-        ModelController ont= new ModelController();
-        ont.setModel(data.getModel());
-        ont.setMap();
-        String owl = ont.getUri("owl");
-        String gr = ont.getUri("gr");
-        String rdfs = ont.getUri("rdfs");
-        String rdf = ont.getUri("rdf");
-        String xsd = ont.getUri("xsd");
-        String dcterms = ont.getUri("dcterms");
-        String foaf = ont.getUri("foaf");
-        String dc = ont.getUri("dc");
-        String gpc =  ont.getUri("gpc");
-        
-        OntModel model= ont.getModel();
-       
-        dataset.begin(ReadWrite.WRITE);
-        
-        ObjectProperty g = model.createObjectProperty(gr+"productAndServiceProperties");
-        g.addComment("Todas las propiedades referentes a productos y servicios", null);
-        
-        DatatypeProperty nombre_producto = model.getDatatypeProperty(gr+"name");
-        nombre_producto.addComment("Nombre del producto o servicio",null);
-        nombre_producto.addLabel("Nombre", null);
-        ObjectProperty marca_producto = model.getObjectProperty(gr+"hasBrand");
-        marca_producto.addComment("Marca asociada al producto o servicio",null);
-        marca_producto.addLabel("Marca", null);
-        DatatypeProperty modelo_producto = model.createDatatypeProperty(gr+"modelo");
-        modelo_producto.addComment("Modelo del producto o servicio",null);
-        modelo_producto.addLabel("Modelo", null);
-        DatatypeProperty descripcion_producto = model.getDatatypeProperty(gr+"description");
-        descripcion_producto.addComment("Breve descripción del producto o servicio",null);
-        descripcion_producto.addLabel("Descripción", null);
-        DatatypeProperty caracteristicas = model.createDatatypeProperty(gr+"caracteristicas");
-        caracteristicas.addComment("Características del producto o servicio",null);
-        caracteristicas.addLabel("Características", null);
-        DatatypeProperty cat= model.getDatatypeProperty(gr+ "category");
-        cat.addComment("Categoría/s del producto o servicio",null);
-        cat.addLabel("Categorías", null);
-        
-        g.addSubProperty(nombre_producto);
-        g.addSubProperty(marca_producto);
-        g.addSubProperty(modelo_producto);
-        g.addSubProperty(descripcion_producto);
-        g.addSubProperty(caracteristicas);
-        g.addSubProperty(cat);
-        
-        System.out.println(g.listSubProperties().toList().toString());
-        
-        
-        try {
-        FileWriter destino = new FileWriter("C:\\Users\\ale_b\\Desktop\\ISI\\gpc.owl");
-        model.writeAll(destino, "RDF/XML-ABBREV");
-        }
-        catch(Exception e){
-         e.printStackTrace();
-        }
-        System.out.println("Salida terminada");
-        dataset.commit();
-        dataset.end();
+//    public static void main(String[] args) throws IOException {
+//        TDBController data = new TDBController("C:\\Users\\ale_b\\Desktop\\ISI\\Investigación\\JenaTDB");
+//        
+//        data.loadModel("C:\\Users\\ale_b\\Desktop\\ISI\\Investigación\\gpc.owl");
+//        
+//        Dataset dataset = data.getDataset();
+//       
+//        ModelController ont= new ModelController();
+//        ont.setModel(data.getModel());
+//        ont.setMap();
+//        String owl = ont.getUri("owl");
+//        String gr = ont.getUri("gr");
+//        String rdfs = ont.getUri("rdfs");
+//        String rdf = ont.getUri("rdf");
+//        String xsd = ont.getUri("xsd");
+//        String dcterms = ont.getUri("dcterms");
+//        String foaf = ont.getUri("foaf");
+//        String dc = ont.getUri("dc");
+//        String gpc =  ont.getUri("gpc");
+//        
+//        OntModel model= ont.getModel();
+//       
+//        dataset.begin(ReadWrite.WRITE);
+//        
+//        ObjectProperty g = model.createObjectProperty(gr+"productAndServiceProperties");
+//        g.addComment("Todas las propiedades referentes a productos y servicios", null);
+//        
+//        DatatypeProperty nombre_producto = model.getDatatypeProperty(gr+"name");
+//        nombre_producto.addComment("Nombre del producto o servicio",null);
+//        nombre_producto.addLabel("Nombre", null);
+//        ObjectProperty marca_producto = model.getObjectProperty(gr+"hasBrand");
+//        marca_producto.addComment("Marca asociada al producto o servicio",null);
+//        marca_producto.addLabel("Marca", null);
+//        DatatypeProperty modelo_producto = model.createDatatypeProperty(gr+"modelo");
+//        modelo_producto.addComment("Modelo del producto o servicio",null);
+//        modelo_producto.addLabel("Modelo", null);
+//        DatatypeProperty descripcion_producto = model.getDatatypeProperty(gr+"description");
+//        descripcion_producto.addComment("Breve descripción del producto o servicio",null);
+//        descripcion_producto.addLabel("Descripción", null);
+//        DatatypeProperty caracteristicas = model.createDatatypeProperty(gr+"caracteristicas");
+//        caracteristicas.addComment("Características del producto o servicio",null);
+//        caracteristicas.addLabel("Características", null);
+//        DatatypeProperty cat= model.getDatatypeProperty(gr+ "category");
+//        cat.addComment("Categoría/s del producto o servicio",null);
+//        cat.addLabel("Categorías", null);
+//        
+//        g.addSubProperty(nombre_producto);
+//        g.addSubProperty(marca_producto);
+//        g.addSubProperty(modelo_producto);
+//        g.addSubProperty(descripcion_producto);
+//        g.addSubProperty(caracteristicas);
+//        g.addSubProperty(cat);
+//        
+//        System.out.println(g.listSubProperties().toList().toString());
+//        
+//        
+//        try {
+//        FileWriter destino = new FileWriter("C:\\Users\\ale_b\\Desktop\\ISI\\gpc.owl");
+//        model.writeAll(destino, "RDF/XML-ABBREV");
+//        }
+//        catch(Exception e){
+//         e.printStackTrace();
+//        }
+//        System.out.println("Salida terminada");
+//        dataset.commit();
+//        dataset.end();
         
 //        data.loadModel("C:\\Users\\ale_b\\Desktop\\ISI\\Investigación\\gpc.owl");
 //        
@@ -138,4 +138,4 @@ public class Main2 {
         
     
     }
-}
+

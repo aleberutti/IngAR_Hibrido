@@ -19,14 +19,12 @@ public class MongoController {
     public MongoClient client;
     public MongoDatabase db;
     public MongoCollection coleccion;
-    public MongoCollection propiedades;
     
     public MongoController (String database, String c) throws IOException{
         this.port = 27017;
         this.client = new MongoClient("localhost", port);
         db = client.getDatabase("ontologia");
         coleccion = db.getCollection("instancias");
-        propiedades = db.getCollection("propiedades");
     }
     
     public MongoCollection getCollection(){
@@ -35,10 +33,6 @@ public class MongoController {
     
     public MongoDatabase getdatabase(){
         return this.db;
-    }
-    
-    public MongoCollection getPropiedades(){
-        return this.propiedades;
     }
     
     

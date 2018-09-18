@@ -8,8 +8,6 @@ package Controlador;
 import Vista.Inicio;
 import java.io.IOException;
 import org.apache.jena.query.Dataset;
-import org.apache.jena.sparql.core.DatasetGraph;
-import org.apache.jena.sparql.core.DatasetGraphFactory;
 
 public class Main {
 //    public MongoController mongocontroller;
@@ -18,9 +16,9 @@ public class Main {
     public static void main(String[] args) throws IOException{
         //CAMBIAR PATHSSSSSSSSSSSSSSSS
         System.out.println("Comienza tdb");
-        TDBController data = new TDBController("C:\\Users\\ale_b\\Desktop\\ISI\\Investigación\\JenaTDB");
+        TDBController data = new TDBController("C:\\Users\\Azul\\Documents\\INGAR\\Proyecto IngAr\\JenaTDB");
         
-        data.loadModel("C:\\Users\\ale_b\\Desktop\\ISI\\Investigación\\gpc.owl");
+        data.loadModel("C:\\Users\\Azul\\Documents\\INGAR\\Proyecto IngAr\\gpc.owl");
         Dataset dataset = data.getDataset();
         
         System.out.println("Comienza mongo");

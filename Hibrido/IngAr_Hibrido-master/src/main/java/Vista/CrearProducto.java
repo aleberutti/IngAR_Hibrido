@@ -9,6 +9,13 @@ import Controlador.FusekiController;
 import Controlador.ModelController;
 import Controlador.MongoController;
 import Controlador.TDBController;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import org.apache.jena.ontology.OntProperty;
+import org.apache.jena.util.iterator.ExtendedIterator;
+import org.bson.Document;
 
 
 public class CrearProducto extends javax.swing.JFrame {
@@ -16,19 +23,47 @@ public class CrearProducto extends javax.swing.JFrame {
     private FusekiController fusekicontroller;
     private ModelController modelcontroller;
     private TDBController tdb;
+    private Document datos;
+    private boolean activarComentarios;
+    
     /**
      * Creates new form CrearProducto
      */
+    @SuppressWarnings("empty-statement")
     public CrearProducto(MongoController m, FusekiController f, ModelController mo, TDBController t) {
-       
         initComponents();
         this.setLocationRelativeTo(null);
         this.modelcontroller=mo;
         this.mongocontroller=m;
         this.fusekicontroller=f;
         this.tdb=t;
-        
-        
+        //Esta variable es para que me permita que me guarde la info en el text area
+        //Porque sino me tira un null pointer exc.
+        activarComentarios = false;
+        setearCampos();
+                
+        this.lista.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                propiedad.setText(lista.getSelectedValue().toUpperCase());
+                //Si ya presiono aceptar alguna vez, entonces hay algo guardado dentro del documento datos
+                //Entonces si hay algo guardado, se tiene que mostrra la info relacionada con la caracteristica
+                //Por ejemplo, si agrego Nombre: Cocina, tiene que aparecer "Cocina" cuando apriete nombre, luego de haberlo guardado
+                //Pero si no hay nada en el documento "datos" y quiero mostrar en el text area nada, me tira null pointer
+                //Asi que esta es la solucion precaria que encontre por el momento
+                System.out.println(activarComentarios);
+                if(activarComentarios) {
+                    if(datos.containsKey(lista.getSelectedValue().toLowerCase())){
+                        campopropiedad.setText(datos.get(lista.getSelectedValue().toLowerCase()).toString());
+                    }
+                else{
+                        campopropiedad.setText("");
+                    }
+                    
+                } 
+               
+            }
+        });    
     }
 
     /**
@@ -51,19 +86,20 @@ public class CrearProducto extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         campopropiedad = new javax.swing.JTextArea();
         atras = new javax.swing.JButton();
+        aceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel3.setBackground(new java.awt.Color(173, 199, 228));
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
         titulo.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 25)); // NOI18N
         titulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/add.png"))); // NOI18N
         titulo.setText(" Agregar Producto");
 
-        jSeparator3.setBackground(new java.awt.Color(121, 159, 200));
+        jSeparator3.setBackground(new java.awt.Color(91, 120, 151));
 
         guardar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
-        guardar.setText("Guardar");
+        guardar.setText("Guardar Producto");
         guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 guardarActionPerformed(evt);
@@ -105,33 +141,44 @@ public class CrearProducto extends javax.swing.JFrame {
             }
         });
 
+        aceptar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        aceptar.setText("Aceptar");
+        aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aceptarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator3)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(propiedad, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(83, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(atras)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(titulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(titulo))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(propiedad, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(100, 100, 100)
+                                .addComponent(guardar)
+                                .addGap(18, 18, 18)
+                                .addComponent(cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(104, 104, 104)))))
+                .addGap(74, 74, 74))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,18 +189,20 @@ public class CrearProducto extends javax.swing.JFrame {
                 .addComponent(titulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(propiedad, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(63, 63, 63))
+                        .addGap(18, 18, 18)
+                        .addComponent(aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane6))
+                .addGap(41, 41, 41)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -164,32 +213,20 @@ public class CrearProducto extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-        this.getCamposModificados();
-    }//GEN-LAST:event_guardarActionPerformed
-
-    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-        // TODO add your handling code here:
-        int seleccion = JOptionPane.showOptionDialog(this, "No se guardaran los datos \n ¿Está seguro que desea cancelar?", "",  JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-            null,    // null para icono por defecto.
-            new Object[] { "Si", "No" },   // null para YES, NO y CANCEL
-            "Si");
-        if (seleccion==0){
-            Inicio i = new Inicio(mc, fc, tdb, modelcontroller);
-            this.setVisible(false);
-            i.setVisible(true);
-        }
-    }//GEN-LAST:event_cancelarActionPerformed
-
-    private void listaevento(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaevento
-
-    }//GEN-LAST:event_listaevento
+    private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
+    //Para verificar si el tipo escribio algo y guardarlo en el documento
+    System.out.println(activarComentarios);        
+    //Activo para que se muestren comentarios, ya que agrego algun dato en el documento, por ende no esta vacio
+    activarComentarios = true;
+    verificarArea();
+    System.out.println(activarComentarios);
+    }//GEN-LAST:event_aceptarActionPerformed
 
     private void atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasActionPerformed
         // TODO add your handling code here:
@@ -198,14 +235,83 @@ public class CrearProducto extends javax.swing.JFrame {
             new Object[] { "Si", "No" },   // null para YES, NO y CANCEL
             "Si");
         if (seleccion==0){
-            ResultadosBusqueda rb = new ResultadosBusqueda(mc, fc, modelcontroller, tdb, datos.get("_id").toString(), datos.get("nombre").toString(), datos.get("marca").toString(), datos.get("modelo").toString(), datos.get("tipo").toString());
-            rb.setVisible(true);
+            Inicio i = new Inicio(mongocontroller, fusekicontroller, tdb, modelcontroller);
+            i.setVisible(true);
             this.setVisible(false);
         }
     }//GEN-LAST:event_atrasActionPerformed
 
+    private void listaevento(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaevento
+
+    }//GEN-LAST:event_listaevento
+
+    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
+        // TODO add your handling code here:
+        int seleccion = JOptionPane.showOptionDialog(this, "No se guardaran los datos \n ¿Está seguro que desea cancelar?", "",  JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+            null,    // null para icono por defecto.
+            new Object[] { "Si", "No" },   // null para YES, NO y CANCEL
+            "Si");
+        if (seleccion==0){
+            Inicio i = new Inicio(mongocontroller, fusekicontroller, tdb, modelcontroller);
+            this.setVisible(false);
+            i.setVisible(true);
+        }
+    }//GEN-LAST:event_cancelarActionPerformed
+
+    private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
+        //Agrego el documento nuevo a mongo
+        mongocontroller.agregarDoc(datos);
+
+        
+        JOptionPane.showMessageDialog(this, "Se han guardado los cambios", "Exito",  JOptionPane.INFORMATION_MESSAGE);
+        Inicio i = new Inicio(mongocontroller, fusekicontroller, tdb, modelcontroller);
+        this.setVisible(false);
+        i.setVisible(true);
+    }//GEN-LAST:event_guardarActionPerformed
+
+    private void setearCampos(){
+        ExtendedIterator <?extends OntProperty> it= this.modelcontroller.getProperties();
+        
+        DefaultListModel modelo = new DefaultListModel();
+
+        while(it.hasNext()){
+            String prop = it.next().getLabel(null);
+            modelo.addElement(prop);   
+        }
+
+        //Se agrega uno que diga Nombre
+        modelo.addElement("Nombre");
+        //Saco el name(0..1) para que no quede tan feo
+        modelo.removeElement("name (0..1)");
+        //Saco las categorias porque si pone una combinacion de categorias que no se cubrireron, no se sae instancia de que clase es
+        modelo.removeElement("Categorias");
+       
+        lista.setModel(modelo);
+    }
+    
+    private void verificarArea(){
+        if(!this.campopropiedad.getText().isEmpty()){
+           //Agrego al documento la propiedad con el valor que haya escrito en el campo. 
+           //La propiedad en minuscula porque asi estan escritas en mongo
+           
+           //Si no verifico esto me tira null pointer exception
+           if(activarComentarios){
+                if(datos.containsKey(lista.getSelectedValue().toLowerCase())){
+                //Si ya existia la propiedad la reemplazo 
+                    datos.replace(lista.getSelectedValue().toLowerCase(), campopropiedad.getText());
+                }
+                           
+                else{
+                    datos.append(lista.getSelectedValue().toLowerCase(), campopropiedad.getText()); 
+                }
+           }
+
+           }  
+        }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aceptar;
     private javax.swing.JButton atras;
     private javax.swing.JTextArea campopropiedad;
     private javax.swing.JButton cancelar;
