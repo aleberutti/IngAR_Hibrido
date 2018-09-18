@@ -14,7 +14,7 @@ import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntProperty;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.util.iterator.ExtendedIterator;
 import org.apache.jena.util.iterator.Filter;
@@ -47,8 +47,6 @@ public class ModelController {
         this.propiedades = this.model.getObjectProperty(gr+"productAndServiceProperties");
     }
     
-
-
     public OntModelSpec getSpec() {
         return spec;
     }
@@ -78,16 +76,14 @@ public class ModelController {
         this.mapUris = this.model.getNsPrefixMap();
     }
     
-    public void createDatatypeProperty(String uri, String comment){
+    public void createDatatypeProperty(String uri){
         DatatypeProperty p= this.model.createDatatypeProperty(gr+uri);
         p.addLabel(uri, null);
-        if(!comment.isEmpty()) p.addComment(comment, null);
         this.propiedades.addSubProperty(p);
     }
-    public void createObjectProperty(String uri, String comment){
+    public void createObjectProperty(String uri){
         ObjectProperty o =this.model.createObjectProperty(gr+uri);
         o.addLabel(uri, null);
-        if(!comment.isEmpty()) o.addComment(comment, null);
         this.propiedades.addSubProperty(o);
     }
     
@@ -102,13 +98,12 @@ public class ModelController {
         c.remove();
     }
     
-    public void removeProperty(String nombre){
-        OntProperty o = this.model.getOntProperty(gr+nombre);
-        o.remove();
-    }
-    
     public ExtendedIterator<? extends OntProperty> getProperties(){
         return this.propiedades.listSubProperties();
+    }
+    
+    public StmtIterator getPropertiesCrearProducto(){
+        return this.propiedades.listProperties();
     }
     
     public Clase createClass(String uri){

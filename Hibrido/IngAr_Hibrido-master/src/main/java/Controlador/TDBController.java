@@ -34,14 +34,14 @@ public class TDBController {
     }
     public void loadModel( String m_path){
         this.data.begin(ReadWrite.WRITE);
-        this.model= this.data.getDefaultModel();
-        this.model.read(FileManager.get().open(m_path),"");
+        this.model = this.data.getDefaultModel();
+        this.model.read(FileManager.get().open(m_path),"");  
         this.data.commit();
         this.data.end();
     }
     public void updateData(Model m){
         this.data.begin(ReadWrite.WRITE);
-        this.model.removeAll();
+        this.model = this.data.getDefaultModel();
         this.model.add(m);
         this.data.commit();
         this.data.end();

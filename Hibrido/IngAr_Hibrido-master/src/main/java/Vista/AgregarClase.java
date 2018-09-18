@@ -6,37 +6,71 @@
 package Vista;
 
 import Controlador.*;
+import Modelo.Clase;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
 
 /**
  *
  * @author ale_b
  */
-public class AgregarPropiedad extends javax.swing.JFrame {
+public class AgregarClase extends javax.swing.JFrame {
 
     private ModelController model;
     private FusekiController fuseki;
     private TDBController tdb;
-    private JTree arbol;
     private MongoController mongo;
+    private JTree arbol;
+    private Clase clase;
     
     /**
      * Creates new form AgregarPropiedad
      */
-    public AgregarPropiedad(ModelController m, FusekiController f,TDBController tc, JTree arb, MongoController mo) {
+    public AgregarClase(ModelController m, FusekiController f,TDBController tc,MongoController mo, Clase c) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.model=m;
         this.fuseki=f;
         this.tdb=tc;
-        this.arbol=arb;
         this.mongo=mo;
+        this.clase=c;
+        this.subclass.setText(c.toString());
+        
     }
-
+    public void setTree(DefaultMutableTreeNode raiz, ArrayList <Clase> raices){
+        
+        for (Clase c: raices){
+                c.setSubClasses();
+                DefaultMutableTreeNode node = new DefaultMutableTreeNode(c);
+                if (!node.equals(raiz)){
+                    raiz.add(node);
+                }
+                
+                if (!c.isLeaf()){
+                    ArrayList<Clase> hijos= c.getHijos();
+                    setTree(node, hijos);
+                }
+                    
+        }
+    }
+    public void setTreeIcons(){
+        DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
+        ImageIcon leafIcon = new ImageIcon(getClass().getResource("/price-tag.png"));
+        ImageIcon rootClosedIcon = new ImageIcon(getClass().getResource("/closefolder.png"));
+        ImageIcon rootOpenIcon = new ImageIcon(getClass().getResource("/openfolder.png"));
+        renderer.setLeafIcon(leafIcon);
+        renderer.setClosedIcon(rootClosedIcon);
+        renderer.setOpenIcon(rootOpenIcon);
+        arbol.setCellRenderer(renderer);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,14 +82,13 @@ public class AgregarPropiedad extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        dp = new javax.swing.JCheckBox();
-        op = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
-        nombrePropiedad = new javax.swing.JTextField();
+        nombreClase = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         uri = new javax.swing.JLabel();
         guardar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
+        subclass = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         comments = new javax.swing.JTextArea();
@@ -65,46 +98,30 @@ public class AgregarPropiedad extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(173, 199, 228));
 
         jLabel3.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 16)); // NOI18N
-        jLabel3.setText("Tipo de propiedad:");
-
-        dp.setText("Datatype property");
-        dp.setContentAreaFilled(false);
-        dp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dpActionPerformed(evt);
-            }
-        });
-
-        op.setText("Object property");
-        op.setContentAreaFilled(false);
-        op.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opActionPerformed(evt);
-            }
-        });
+        jLabel3.setText("Subclase de:");
 
         jLabel4.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 16)); // NOI18N
         jLabel4.setText("URI:");
 
-        nombrePropiedad.addActionListener(new java.awt.event.ActionListener() {
+        nombreClase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nombrePropiedadActionPerformed(evt);
+                nombreClaseActionPerformed(evt);
             }
         });
-        nombrePropiedad.addKeyListener(new java.awt.event.KeyAdapter() {
+        nombreClase.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                nombrePropiedadKeyPressed(evt);
+                nombreClaseKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                nombrePropiedadKeyReleased(evt);
+                nombreClaseKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                nombrePropiedadKeyTyped(evt);
+                nombreClaseKeyTyped(evt);
             }
         });
 
         jLabel5.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 16)); // NOI18N
-        jLabel5.setText("Nombre de la propiedad:");
+        jLabel5.setText("Nombre de la nueva clase:");
 
         uri.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 
@@ -126,6 +143,8 @@ public class AgregarPropiedad extends javax.swing.JFrame {
             }
         });
 
+        subclass.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+
         jLabel6.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 16)); // NOI18N
         jLabel6.setText("Comentarios:");
 
@@ -137,82 +156,73 @@ public class AgregarPropiedad extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 235, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(dp, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(138, 138, 138))
+                        .addContainerGap()
+                        .addComponent(nombreClase))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(subclass, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nombrePropiedad)
+                        .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(uri))
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel6)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(217, Short.MAX_VALUE)
-                    .addComponent(op, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(133, 133, 133)))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(19, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(dp)
-                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(subclass, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(58, 58, 58)
                 .addComponent(jLabel5)
                 .addGap(13, 13, 13)
-                .addComponent(nombrePropiedad, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(uri))
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(uri, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(44, 44, 44)
-                    .addComponent(op)
-                    .addContainerGap(246, Short.MAX_VALUE)))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(240, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(137, 137, 137)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,75 +232,46 @@ public class AgregarPropiedad extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void dpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpActionPerformed
+    private void nombreClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreClaseActionPerformed
         // TODO add your handling code here:
-        if(dp.isSelected()){
-            this.op.setEnabled(false);
-        }
-        else{
-            this.op.setEnabled(true);
-        }
-        
-    }//GEN-LAST:event_dpActionPerformed
+    }//GEN-LAST:event_nombreClaseActionPerformed
 
-    private void opActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opActionPerformed
-        // TODO add your handling code here:
-        if(op.isSelected()){
-            this.dp.setEnabled(false);
-        }
-        else{
-            this.dp.setEnabled(true);
-        }
-    }//GEN-LAST:event_opActionPerformed
+    private void nombreClaseKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreClaseKeyTyped
 
-    private void nombrePropiedadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombrePropiedadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nombrePropiedadActionPerformed
-
-    private void nombrePropiedadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombrePropiedadKeyTyped
-
-    }//GEN-LAST:event_nombrePropiedadKeyTyped
+    }//GEN-LAST:event_nombreClaseKeyTyped
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
 
-        if (!dp.isSelected() && !op.isSelected()){
-            JOptionPane.showMessageDialog(this, "Debe elegir un tipo de propiedad", "Error",  JOptionPane.ERROR_MESSAGE);
-        }
-        else{
-        if (nombrePropiedad.getText().isEmpty()){
+        if (nombreClase.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Debe proporcionar un nombre", "Error",  JOptionPane.ERROR_MESSAGE);
         }
-        else{
-            if(op.isSelected()){
-                                
-                this.model.createObjectProperty(nombrePropiedad.getText().replaceAll(" ", ""), this.comments.getText());
+        else{                       
+                Clase c= this.model.createClass(nombreClase.getText().replaceAll(" ",""));
+                c.addLabel(nombreClase.getText());
+                if (!this.comments.getText().isEmpty()) c.addComment(this.comments.getText());
+                this.clase.addSubclass(c);
+                
                 System.out.println("comienza update");
                 tdb.updateData(model.getModel().getBaseModel());
                 System.out.println("comienza nuevo servidor");
                 this.fuseki=new FusekiController(3030, tdb.getDataset(), "/ont");
+                DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(new Clase (this.model.getOntClass("http://www.w3.org/2002/07/owl#Thing")));
+                ArrayList <Clase> raices = this.model.getHierarchyRootClasses();
+                setTree(raiz, raices);
+                this.arbol= new JTree(raiz);
+                setTreeIcons();
                 ModificarOntologia mo= new ModificarOntologia(fuseki, mongo, model, arbol, tdb);
                 this.setVisible(false);
                 mo.setVisible(true);
                 
-            }
-            else{
-                               
-                this.model.createDatatypeProperty(nombrePropiedad.getText().replaceAll(" ", ""), this.comments.getText());
-                System.out.println("comienza update");
-                tdb.updateData(model.getModel().getBaseModel());
-                System.out.println("comienza nuevo servidor");
-                this.fuseki=new FusekiController(3030, tdb.getDataset(), "/ont");
-                ModificarOntologia mo= new ModificarOntologia(fuseki, mongo, model, arbol, tdb);
-                this.setVisible(false);
-                mo.setVisible(true);
-                
-            }
+            
+            
         }
         
-        }
+        
         
     }//GEN-LAST:event_guardarActionPerformed
-
+    
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
         int seleccion = JOptionPane.showOptionDialog(
         this,
@@ -302,20 +283,25 @@ public class AgregarPropiedad extends javax.swing.JFrame {
         new Object[] { "Si", "No" },   // null para YES, NO y CANCEL
         "Si");
         if (seleccion==0){
+            DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(new Clase (this.model.getOntClass("http://www.w3.org/2002/07/owl#Thing")));
+            ArrayList <Clase> raices = this.model.getHierarchyRootClasses();
+            setTree(raiz, raices);
+            setTreeIcons();
+            this.arbol= new JTree(raiz);
             ModificarOntologia mo= new ModificarOntologia(fuseki, mongo, model, arbol, tdb);
             this.setVisible(false);
             mo.setVisible(true);
         }
     }//GEN-LAST:event_cancelarActionPerformed
 
-    private void nombrePropiedadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombrePropiedadKeyPressed
+    private void nombreClaseKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreClaseKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nombrePropiedadKeyPressed
+    }//GEN-LAST:event_nombreClaseKeyPressed
 
-    private void nombrePropiedadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombrePropiedadKeyReleased
+    private void nombreClaseKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreClaseKeyReleased
         // TODO add your handling code here:
-        this.uri.setText(this.model.getUri("gr")+nombrePropiedad.getText().replaceAll(" ", ""));
-    }//GEN-LAST:event_nombrePropiedadKeyReleased
+        this.uri.setText(this.model.getUri("gpc")+nombreClase.getText().replaceAll(" ",""));
+    }//GEN-LAST:event_nombreClaseKeyReleased
 
     /**
      * @param args the command line arguments
@@ -325,7 +311,6 @@ public class AgregarPropiedad extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelar;
     private javax.swing.JTextArea comments;
-    private javax.swing.JCheckBox dp;
     private javax.swing.JButton guardar;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -333,8 +318,8 @@ public class AgregarPropiedad extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField nombrePropiedad;
-    private javax.swing.JCheckBox op;
+    private javax.swing.JTextField nombreClase;
+    private javax.swing.JLabel subclass;
     private javax.swing.JLabel uri;
     // End of variables declaration//GEN-END:variables
 }

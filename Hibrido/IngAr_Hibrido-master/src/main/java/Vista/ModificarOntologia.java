@@ -136,10 +136,9 @@ public class ModificarOntologia extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         propertyList = new javax.swing.JList<>();
-        eliminarPropied = new javax.swing.JButton();
-        agregarPropiedad = new javax.swing.JButton();
         scrollPane = new javax.swing.JScrollPane();
         jLabel2 = new javax.swing.JLabel();
+        agregarPropiedad = new javax.swing.JButton();
         agregarClase = new javax.swing.JButton();
         eliminarClase = new javax.swing.JButton();
 
@@ -168,26 +167,6 @@ public class ModificarOntologia extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(propertyList);
 
-        eliminarPropied.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
-        eliminarPropied.setIcon(new javax.swing.ImageIcon(getClass().getResource("/error.png"))); // NOI18N
-        eliminarPropied.setText("Eliminar propiedad");
-        eliminarPropied.setBorder(new javax.swing.border.LineBorder(java.awt.SystemColor.activeCaption, 2, true));
-        eliminarPropied.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eliminarPropiedActionPerformed(evt);
-            }
-        });
-
-        agregarPropiedad.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
-        agregarPropiedad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plus.png"))); // NOI18N
-        agregarPropiedad.setText(" Agregar propiedad");
-        agregarPropiedad.setBorder(new javax.swing.border.LineBorder(java.awt.SystemColor.activeCaption, 2, true));
-        agregarPropiedad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                agregarPropiedadActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout propiedadesLayout = new javax.swing.GroupLayout(propiedades);
         propiedades.setLayout(propiedadesLayout);
         propiedadesLayout.setHorizontalGroup(
@@ -195,18 +174,13 @@ public class ModificarOntologia extends javax.swing.JFrame {
             .addGroup(propiedadesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(propiedadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
                     .addGroup(propiedadesLayout.createSequentialGroup()
                         .addGroup(propiedadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(propiedadesLayout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(propiedadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(agregarPropiedad, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
-                                    .addComponent(eliminarPropied, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         propiedadesLayout.setVerticalGroup(
@@ -219,13 +193,7 @@ public class ModificarOntologia extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(propiedadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-                    .addGroup(propiedadesLayout.createSequentialGroup()
-                        .addComponent(agregarPropiedad, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(eliminarPropied, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))
         );
 
         scrollPane.setBackground(new java.awt.Color(173, 199, 228));
@@ -233,6 +201,16 @@ public class ModificarOntologia extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 18)); // NOI18N
         jLabel2.setText("Clases:");
+
+        agregarPropiedad.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
+        agregarPropiedad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plus.png"))); // NOI18N
+        agregarPropiedad.setText(" Agregar propiedad");
+        agregarPropiedad.setBorder(new javax.swing.border.LineBorder(java.awt.SystemColor.activeCaption, 2, true));
+        agregarPropiedad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarPropiedadActionPerformed(evt);
+            }
+        });
 
         agregarClase.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 14)); // NOI18N
         agregarClase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plus.png"))); // NOI18N
@@ -268,7 +246,9 @@ public class ModificarOntologia extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addComponent(propiedades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(contenedorLayout.createSequentialGroup()
-                        .addGap(331, 331, 331)
+                        .addGap(100, 100, 100)
+                        .addComponent(agregarPropiedad, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
                         .addComponent(eliminarClase, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(agregarClase, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -287,7 +267,8 @@ public class ModificarOntologia extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(contenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(agregarClase, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(eliminarClase, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(eliminarClase, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(agregarPropiedad, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -320,7 +301,7 @@ public class ModificarOntologia extends javax.swing.JFrame {
         }
         else {
             DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) arbol.getLastSelectedPathComponent();
-            AgregarClase ac = new AgregarClase (model, fuseki, tdb, mongo, (Clase)selectedNode.getUserObject(), this.arbol);
+            AgregarClase ac = new AgregarClase (model, fuseki, tdb, mongo, (Clase)selectedNode.getUserObject());
             ac.setVisible(true);
             this.setVisible(false);
         }
@@ -351,18 +332,6 @@ public class ModificarOntologia extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_eliminarClaseActionPerformed
-
-    private void eliminarPropiedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarPropiedActionPerformed
-        if(this.propertyList.getSelectedValue().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una propiedad", "Error",  JOptionPane.ERROR_MESSAGE);
-        }
-        else{
-            this.model.removeProperty(this.propertyList.getSelectedValue());
-            tdb.updateData(model.getModel().getBaseModel());
-            this.fuseki=new FusekiController(3030, tdb.getDataset(), "/ont");
-            this.setPropertyList();
-        }
-    }//GEN-LAST:event_eliminarPropiedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -407,7 +376,6 @@ public class ModificarOntologia extends javax.swing.JFrame {
     public javax.swing.JTextArea comments;
     private javax.swing.JPanel contenedor;
     private javax.swing.JButton eliminarClase;
-    private javax.swing.JButton eliminarPropied;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
