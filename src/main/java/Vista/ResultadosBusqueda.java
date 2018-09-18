@@ -32,6 +32,7 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
         this.modelcontroller=mo;
         this.tdbcontroller=t;
 
+        //Busco los productos que coincidan con los datos ingresados
         productos = mongocontroller.busqueda(id, nombre, marca, modelo, tipo);
         this.completarTabla();
     }
@@ -45,9 +46,14 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
         tm.setRowCount(0);
         for(int i=0; i<productos.size(); i++){
             
+            //Agrego los datos obtenidos mediante el mongocontroller
+            //Si no devuelve nada, le pongo vacio
             String datos[] = new String[5];
+            
             String id = (String) productos.get(i).get("_id");
+            //Le saco el uri al id para que me muestre solo la parte del numero
             datos[0] = id.substring(54);
+            
             if((String) productos.get(i).get("nombre")!= "NULL"){
                 datos[1] = (String) productos.get(i).get("nombre");
             }
@@ -75,7 +81,6 @@ public class ResultadosBusqueda extends javax.swing.JFrame {
             
             tm.addRow(datos);
         }
-        tm.fireTableDataChanged();
     }
     /**
      * This method is called from within the constructor to initialize the form.

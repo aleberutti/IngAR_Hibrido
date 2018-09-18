@@ -326,14 +326,14 @@ public class FiltrosBusqueda extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
-        // TODO add your handling code here:
+
         String cid = campoid.getText();
         String cnombre = camponombre.getText();
         String cmarca = campomarca.getText();
         String cmodelo = campomodelo.getText();
         String cclase = campotipo.getText();
         
-        
+        //si el campo esta vacio lo seteo en null para poder pasarle algo al constructor mas abajo
         if(campoid.getText().isEmpty()){
             cid = null; 
         }
