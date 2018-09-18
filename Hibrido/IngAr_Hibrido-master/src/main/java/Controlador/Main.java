@@ -16,9 +16,9 @@ public class Main {
     public static void main(String[] args) throws IOException{
         //CAMBIAR PATHSSSSSSSSSSSSSSSS
         System.out.println("Comienza tdb");
-        TDBController data = new TDBController("C:\\Users\\Azul\\Documents\\INGAR\\Proyecto IngAr\\JenaTDB");
+        TDBController data = new TDBController("C:\\Users\\Azul\\Documents\\INGAR\\JenaTDB");
         
-        data.loadModel("C:\\Users\\Azul\\Documents\\INGAR\\Proyecto IngAr\\gpc.owl");
+        data.loadModel("C:\\Users\\Azul\\Documents\\INGAR\\gpc.owl");
         Dataset dataset = data.getDataset();
         
         System.out.println("Comienza mongo");

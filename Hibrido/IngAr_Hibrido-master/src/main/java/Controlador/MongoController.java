@@ -103,9 +103,11 @@ public class MongoController {
         doc.append("_id", uri+id);
         FindIterable it = coleccion.find(doc);
         if(it.iterator().hasNext()){
+            //Existe un documento con ese id
             return false;
         }
         else{
+            //No existe un documento con ese id
             return true;
         } 
     }
