@@ -82,7 +82,7 @@ public class CrearProducto extends javax.swing.JFrame {
         titulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/add.png"))); // NOI18N
         titulo.setText(" Agregar Producto");
 
-        jSeparator3.setBackground(new java.awt.Color(91, 120, 151));
+        jSeparator3.setBackground(new java.awt.Color(153, 153, 153));
 
         guardar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         guardar.setText("Guardar Producto");
