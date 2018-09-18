@@ -102,6 +102,11 @@ public class ModelController {
         c.remove();
     }
     
+    public void removeProperty(String nombre){
+        OntProperty o = this.model.getOntProperty(gr+nombre);
+        o.remove();
+    }
+    
     public ExtendedIterator<? extends OntProperty> getProperties(){
         return this.propiedades.listSubProperties();
     }

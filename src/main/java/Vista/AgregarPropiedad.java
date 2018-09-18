@@ -263,7 +263,7 @@ public class AgregarPropiedad extends javax.swing.JFrame {
         else{
             if(op.isSelected()){
                                 
-                this.model.createObjectProperty(nombrePropiedad.getText(), this.comments.getText());
+                this.model.createObjectProperty(nombrePropiedad.getText().replaceAll(" ", ""), this.comments.getText());
                 System.out.println("comienza update");
                 tdb.updateData(model.getModel().getBaseModel());
                 System.out.println("comienza nuevo servidor");
@@ -275,7 +275,7 @@ public class AgregarPropiedad extends javax.swing.JFrame {
             }
             else{
                                
-                this.model.createDatatypeProperty(nombrePropiedad.getText(), this.comments.getText());
+                this.model.createDatatypeProperty(nombrePropiedad.getText().replaceAll(" ", ""), this.comments.getText());
                 System.out.println("comienza update");
                 tdb.updateData(model.getModel().getBaseModel());
                 System.out.println("comienza nuevo servidor");
@@ -301,7 +301,11 @@ public class AgregarPropiedad extends javax.swing.JFrame {
         null,    // null para icono por defecto.
         new Object[] { "Si", "No" },   // null para YES, NO y CANCEL
         "Si");
-        if (seleccion==0) this.setVisible(false);
+        if (seleccion==0){
+            ModificarOntologia mo= new ModificarOntologia(fuseki, mongo, model, arbol, tdb);
+            this.setVisible(false);
+            mo.setVisible(true);
+        }
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void nombrePropiedadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombrePropiedadKeyPressed
@@ -310,7 +314,7 @@ public class AgregarPropiedad extends javax.swing.JFrame {
 
     private void nombrePropiedadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombrePropiedadKeyReleased
         // TODO add your handling code here:
-        this.uri.setText(this.model.getUri("gr")+nombrePropiedad.getText());
+        this.uri.setText(this.model.getUri("gr")+nombrePropiedad.getText().replaceAll(" ", ""));
     }//GEN-LAST:event_nombrePropiedadKeyReleased
 
     /**

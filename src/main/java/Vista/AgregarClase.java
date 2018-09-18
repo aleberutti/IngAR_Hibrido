@@ -34,7 +34,7 @@ public class AgregarClase extends javax.swing.JFrame {
     /**
      * Creates new form AgregarPropiedad
      */
-    public AgregarClase(ModelController m, FusekiController f,TDBController tc,MongoController mo, Clase c) {
+    public AgregarClase(ModelController m, FusekiController f,TDBController tc,MongoController mo, Clase c, JTree a) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.model=m;
@@ -42,6 +42,7 @@ public class AgregarClase extends javax.swing.JFrame {
         this.tdb=tc;
         this.mongo=mo;
         this.clase=c;
+        this.arbol=a;
         this.subclass.setText(c.toString());
         
     }
@@ -175,15 +176,13 @@ public class AgregarClase extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(uri))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel6)))
+                            .addComponent(jLabel6))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -221,7 +220,7 @@ public class AgregarClase extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
